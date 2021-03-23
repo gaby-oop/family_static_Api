@@ -38,6 +38,29 @@ def handle_hello():
 
     return jsonify(response_body), 200
 
+#metodo no lleva return.
+#def= definir una funcion o metodo.
+@app.route('/members/<int:id>', methods=['GET'])
+def member(id):
+
+    member = jackson_family.get_member(id)
+
+    return jsonify(member), 200
+
+@app.route('/new_member', methods=['POST'])
+def new ():
+
+    response_body = request.get_json()
+    member = jackson_family.add_member(response_body["first_name"],response_body["age"],response_body["lucky_numbers"])
+    return jsonify(member), 200
+
+@app.route('/del_member/<int:id>', methods=['DELETE'])
+def delet (id):   
+    delet = jackson_family.delete_member(id)
+    return jsonify(delet), 200
+    
+
+
 # this only runs if `$ python src/app.py` is executed
 if __name__ == '__main__':
     PORT = int(os.environ.get('PORT', 3000))
